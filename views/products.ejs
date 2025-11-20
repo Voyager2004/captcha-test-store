@@ -1,0 +1,8 @@
+<h2>商品列表</h2>
+<ul>
+  <% products.forEach(p => { %>
+    <li>
+      <a href="/product/<%= p.id %>"><%= p.name %></a> - ￥<%= p.price %>
+    </li>
+  <% }) %>
+</ul>

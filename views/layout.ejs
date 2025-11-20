@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= typeof title !== 'undefined' ? title : '验证码测试商店' %></title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/logger.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">首页</a>
+        <a href="/products">商品列表</a>
+        <a href="/cart">购物车</a>
+        <a href="/checkout">结算</a>
+        <a href="/login">登录</a>
+        <a href="/register">注册</a>
+        <a href="/admin/logs" style="float:right">日志</a>
+      </nav>
+    </header>
+    <main>
+      <%- body %>
+    </main>
+    <footer>
+      <p>用于爬虫验证码通过测试的模拟商店</p>
+    </footer>
+  </body>
+</html>

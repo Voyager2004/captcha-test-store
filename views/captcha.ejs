@@ -1,0 +1,78 @@
+<section>
+  <h2>请先完成验证码</h2>
+  <p>目标页面：<code><%= target %></code></p>
+
+  <% if (type === 'text' || type === 'math') { %>
+    <div class="captcha-box">
+      <div class="captcha-img"><%- svg %></div>
+      <form method="post" action="/captcha/verify">
+        <input type="hidden" name="target" value="<%= target %>" />
+        <input type="hidden" name="type" value="<%= type %>" />
+        <label>输入上图字符或计算结果：</label>
+        <input name="input" required />
+        <button type="submit">验证</button>
+      </form>
+    </div>
+  <% } else if (type === 'grid') { %>
+    <form method="post" action="/captcha/verify">
+      <p>请选择所有包含目标符号的格子：<span style="font-size:24px"><%= targetEmoji %></span></p>
+      <input type="hidden" name="target" value="<%= target %>" />
+      <input type="hidden" name="type" value="grid" />
+      <div class="grid9">
+        <% grid.forEach((cell, i) => { %>
+          <label class="gridcell">
+            <input type="checkbox" name="sel" value="<%= i %>" />
+            <span><%= cell %></span>
+          </label>
+        <% }) %>
+      </div>
+      <button type="submit">验证</button>
+    </form>
+  <% } else if (type === 'slider') { %>
+    <form method="post" action="/captcha/verify">
+      <p>拖动滑块到 <strong><%= sliderTarget %></strong> 附近（±3）</p>
+      <input type="hidden" name="target" value="<%= target %>" />
+      <input type="hidden" name="type" value="slider" />
+      <div style="display:flex;align-items:center;gap:12px">
+        <input type="range" min="0" max="100" step="5" name="slider" list="slider-ticks" />
+        <span>当前值：<span id="slider-val"></span></span>
+      </div>
+      <datalist id="slider-ticks">
+        <option value="0"></option>
+        <option value="10"></option>
+        <option value="20"></option>
+        <option value="30"></option>
+        <option value="40"></option>
+        <option value="50"></option>
+        <option value="60"></option>
+        <option value="70"></option>
+        <option value="80"></option>
+        <option value="90"></option>
+        <option value="100"></option>
+      </datalist>
+      <button type="submit">验证</button>
+    </form>
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        var r = document.querySelector('input[name="slider"]');
+        var o = document.getElementById('slider-val');
+        if (r && o) { o.textContent = r.value; r.addEventListener('input', function(){ o.textContent = r.value; }); }
+      });
+    </script>
+  <% } else if (type === 'qa') { %>
+    <form method="post" action="/captcha/verify">
+      <p><%= qa.q %></p>
+      <input type="hidden" name="target" value="<%= target %>" />
+      <input type="hidden" name="type" value="qa" />
+      <div>
+        <% qa.options.forEach((o, idx) => { %>
+          <label style="display:block;margin:6px 0">
+            <input type="radio" name="option" value="<%= idx %>" required />
+            <span><%= o %></span>
+          </label>
+        <% }) %>
+      </div>
+      <button type="submit">验证</button>
+    </form>
+  <% } %>
+</section>
