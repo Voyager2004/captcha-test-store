@@ -6,6 +6,8 @@
     <title><%= typeof title !== 'undefined' ? title : '验证码测试商店' %></title>
     <link rel="stylesheet" href="/static/css/styles.css" />
     <script src="/static/js/logger.js" defer></script>
+    <script>window.__popupSuspicion = <%= typeof popupSuspicion !== 'undefined' && popupSuspicion ? 'true' : 'false' %>;</script>
+    <script src="/static/js/popups.js" defer></script>
   </head>
   <body>
     <header>

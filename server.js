@@ -188,6 +188,7 @@ app.post('/captcha/verify', async (req, res) => {
     ok = false;
   }
 
+  req.session.captchaFailCount = ok ? 0 : ((req.session.captchaFailCount || 0) + 1);
   appendLog({ type: 'captcha_verify', path: target, captcha_type: t, ok });
 
   if (ok) {
@@ -222,8 +223,12 @@ app.get('/admin/logs', (req, res) => {
   res.render('admin_logs', { lines });
 });
 
+function suspicionFlag(req) {
+  return (req.session.captchaFailCount || 0) >= 3;
+}
+
 app.get('/', captchaGate, (req, res) => {
-  res.render('home');
+  res.render('home', { popupSuspicion: suspicionFlag(req) });
 });
 
 app.get('/products', captchaGate, (req, res) => {
@@ -232,29 +237,29 @@ app.get('/products', captchaGate, (req, res) => {
     { id: 2, name: '测试商品B', price: 149 },
     { id: 3, name: '测试商品C', price: 299 },
   ];
-  res.render('products', { products });
+  res.render('products', { products, popupSuspicion: suspicionFlag(req) });
 });
 
 app.get('/product/:id', captchaGate, (req, res) => {
   const id = Number(req.params.id);
   const product = { id, name: `测试商品#${id}`, price: 100 + id * 10, desc: '这是一件用于测试的商品' };
-  res.render('product', { product });
+  res.render('product', { product, popupSuspicion: suspicionFlag(req) });
 });
 
 app.get('/cart', captchaGate, (req, res) => {
-  res.render('cart');
+  res.render('cart', { popupSuspicion: suspicionFlag(req) });
 });
 
 app.get('/checkout', captchaGate, (req, res) => {
-  res.render('checkout');
+  res.render('checkout', { popupSuspicion: suspicionFlag(req) });
 });
 
 app.get('/login', captchaGate, (req, res) => {
-  res.render('login');
+  res.render('login', { popupSuspicion: suspicionFlag(req) });
 });
 
 app.get('/register', captchaGate, (req, res) => {
-  res.render('register');
+  res.render('register', { popupSuspicion: suspicionFlag(req) });
 });
 
 app.listen(PORT, () => {

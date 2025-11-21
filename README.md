@@ -3,6 +3,8 @@
 # 🏪 验证码测试商店  
 **Captcha Testing Store**
 
+一个烦人的网站
+
 [![GitHub](https://img.shields.io/badge/GitHub-Voyager2004-black?logo=github)](https://github.com/Voyager2004)
 
 </div>

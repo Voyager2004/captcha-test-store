@@ -10,3 +10,10 @@ footer { padding: 10px; color: #666; border-top: 1px solid #eee; }
 .grid9 { display: grid; grid-template-columns: repeat(3, 80px); gap: 8px; margin: 12px 0; }
 .gridcell { display: flex; align-items: center; justify-content: center; height: 80px; border: 1px solid #ddd; border-radius: 6px; font-size: 24px; cursor: pointer; }
 .gridcell input { margin-right: 6px; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+.modal { background: #fff; width: 540px; max-width: 92vw; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); overflow: hidden; }
+.modal header { background: #f5f5f5; padding: 12px 16px; font-weight: 600; }
+.modal .content { padding: 16px; line-height: 1.6; }
+.modal .actions { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 16px; border-top: 1px solid #eee; }
+.modal .actions button { padding: 8px 12px; }
+.lock-body { overflow: hidden; }
